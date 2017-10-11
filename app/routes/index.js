@@ -1,4 +1,3 @@
-
 const set = (app) => {
   app.use(require('./shipments'));
 };
