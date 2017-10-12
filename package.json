@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "pm2 kill && pm2 start app.js --watch && pm2 logs app",
     "linter": "echo \"Error: no linter specified\" && exit 1",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "dependencies": {
     "@usend/canadapost": "github:machool/-usend-canadapost#2377eca",
@@ -18,6 +18,9 @@
   },
   "devDependencies": {
     "body-parser": "^1.17.1",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^4.0.1",
     "pm2": "^2.4.4",
     "winston": "^2.3.1"
   }
