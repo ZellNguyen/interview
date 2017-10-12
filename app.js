@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 routes.set(app);
 
-if(!module.parent)
+if(!module.parent) // Only open server when run dev
   app.listen(PORT, () => {
     winston.info(`App listening on ${SERVER_URL}:${PORT}`);
   });

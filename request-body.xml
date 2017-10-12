@@ -4,6 +4,7 @@
 	<delivery-spec>
 		<service-code>DOM.EP</service-code>
 		<sender>
+			<name>Hoa Nguyen</name>
 			<company>Machool</company>
 			<contact-phone>1 (778) 939-7636</contact-phone>
 			<address-details>
@@ -14,8 +15,8 @@
 			</address-details>
 		</sender>
 		<destination>
-			<name>John Doe</name>
-			<company>ACME Corp</company>
+			<name>Jon Snow</name>
+			<company>GOT</company>
 			<address-details>
 				<address-line-1>123 Postal Drive</address-line-1>
 				<city>Ottawa</city>

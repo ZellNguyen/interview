@@ -3,9 +3,11 @@ const config = require('./config');
 
 /** GET PDF FILE OF LABEL FROM CANADA-POST API **/
 const getNCSFrom = (json) => {
+
   const links = json['non-contract-shipment-info']['links']['link'];
   const url = getNestedValue(links, 'label')['href']; // url of the non-contract shipment created
   const type = getNestedValue(links, 'label')['media-type']; // type of the label file, e.g: pdf
+  const id = json['non-contract-shipment-info']['shipment-id'];
 
   const getOptions = {
     url : url,
@@ -16,17 +18,18 @@ const getNCSFrom = (json) => {
     encoding: null // Enable returning binary data
   }
 
-  console.log("GET Artifact URL: " + url);
+  console.log("GETTING Artifact " + id + " from URL: " + url);
 
   return new Promise( (resolve, reject) => {
-      request.get(getOptions, (e, r, b) => {
-        if(e) return reject(e);
-        return resolve(b);
-      })
+    // GET PDF file from Canada Post API
+    request.get(getOptions, (e, r, b) => {
+      if(e) return reject(e);
+      return resolve({id: id, pdf: b});
+    })
   });
 }
 
-/** SUPPORT FUNCTION TO READ 'LABEL' IN THE RESPONSE **/
+/** SUPPORT FUNCTIONS TO READ 'LABEL' FIELD IN THE RESPONSE **/
 function containsVal(json, findVal) {
   if(json == null) return false;
 

@@ -3,22 +3,30 @@ const express = require('express');
 const router = express.Router();
 
 const createShipment = require('../canada-post-api/create-ncs');
-
-const getArtifact = require('../canada-post-api/get-artifact');
+const getLabel = require('../canada-post-api/get-label');
 
 const fs = require('fs');
 
+const errorHandler = require('../api-logger');
 
 router.post('/', (req, res, next) => {
   const xmlFile = req.body;
   createShipment.with(xmlFile)
-    .then( (json) => getArtifact.from(json) )
-    .catch( (err) => { console.log("Get Artifact ERROR: " + err) })
-    .then( (pdf) => {
-      fs.writeFile("./tmp/label.pdf", pdf, "binary", function(err){ if(err) console.log("Writting ERROR:" + err) } );
-      return res.status(200).send("Your shipping label is saved as ./tmp/label.pdf\n==========================\n");
+    .catch( (err) => { errorHandler(err, res, 400); } ) // Handling Create new Non-contract shipment ERROR
+    .then( (json) => getLabel.from(json) )
+    .catch( (err) => { errorHandler(err, res, 500); } ) // Handling Get Artifact ERROR
+    .then( ( artifact ) => {
+      const fileName = "./tmp/label-" + artifact.id + ".pdf";
+      fs.writeFile(fileName, artifact.pdf, "binary", function(err){
+        if(err) errorHandler(err, res, 500);
+        else {
+          console.log("DONE!");
+          return res.status(200).send("Your shipping label is saved as ./tmp/label-" + artifact.id +
+                                      ".pdf\n"+
+                                      "==========================\n");
+        }
+      });
     })
-    .catch( (err) => {res.status(400).json(err)} )
 });
 
 router.get('/', (req, res, next) => {
