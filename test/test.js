@@ -9,7 +9,7 @@ chai.use(chaiAsPromised);
 const createShipment = require('../app/canada-post-api/create-ncs');
 
 /** FIND NESTED VALUE **/
-const getNestedValue = require('../app/canada-post-api/get-artifact').getNestedValue;
+const getNestedValue = require('../app/canada-post-api/get-label').getNestedValue;
 describe("When find nested value", function() {
   it("object should contains val", function() {
     const obj = [{a: 4, b:5, c:6}, {a:7, b:8, c:9}];
