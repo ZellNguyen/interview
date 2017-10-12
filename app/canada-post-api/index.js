@@ -1,2 +1,5 @@
-module.exports.createShipment = require('./create-ncs');
-module.exports.getLabel = require('./get-label');
+const canadaPostProvider = {
+  createShipment : require('./create-ncs'),
+  getLabel : require('./get-label')
+}
+module.exports = canadaPostProvider;
