@@ -21,20 +21,29 @@ const readXml = (xmlFile) => new Promise( (resolve, reject) => {
 
 /** POST WITH DEFINED REQUEST **/
 const postWith = (xmlFile) => {
-  return readXml(xmlFile).then((xmlBody) => new Promise( (resolve, reject) => {
-    postOptions.body = xmlBody;
-    request.post(postOptions, (e, r, b) => {
-      if(e) return reject(e);
+  return readXml(xmlFile)
+    .then((xmlBody) => new Promise( (resolve, reject) => {
 
-      try{
-        const json = parser.toJson(b, config.parserOptions);
-        console.log("JSON:" + json);
-        return resolve(json);
-      } catch(err) {
-        reject(err)
-      }
-    });
-  }));
+      postOptions.body = xmlBody;
+
+      // Request to Canada Post Endpoint, Receive XML in response
+      request.post(postOptions, (e, r, b) => {
+        if(e) return reject(e);
+
+        try{
+          // Convert XML to JSON
+          const json = parser.toJson(b, config.parserOptions);
+          console.log("New NCS JSON: " + JSON.stringify(json, 0, 2));
+          return resolve(json);
+        } catch(err) {
+          reject(err)
+        }
+      });
+
+    }))
+    .catch(
+      (err) => {console.log("ReadXML Error: " + err)}
+    );
 };
 
 module.exports.with = postWith;

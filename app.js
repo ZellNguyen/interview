@@ -1,4 +1,3 @@
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const winston = require('winston');
@@ -14,8 +13,9 @@ app.use(bodyParser.json());
 
 routes.set(app);
 
-app.listen(PORT, () => {
-  winston.info(`App listening on ${SERVER_URL}:${PORT}`);
-});
+if(!module.parent)
+  app.listen(PORT, () => {
+    winston.info(`App listening on ${SERVER_URL}:${PORT}`);
+  });
 
 module.exports = app;

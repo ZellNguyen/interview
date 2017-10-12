@@ -15,6 +15,11 @@ describe("When find nested value", function() {
     const obj = [{a: 4, b:5, c:6}, {a:7, b:8, c:9}];
     chai.expect(getNestedValue(obj, 7)).to.deep.equal({a:7, b:8, c:9});
   })
+
+  it("object should not contains val", function() {
+    const obj = [{a:4, b:5, c:6}, {d:7, c:8, e:9}];
+    chai.expect(getNestedValue(obj, 11)).to.deep.equal(null);
+  })
 })
 
 /** READ XML FILE **/
@@ -33,5 +38,3 @@ describe("When request json from Canada Post API", function() {
     chai.expect(postWith('./request-body.xml')).to.eventually.have.own.property('non-contract-shipment-info');
   })
 })
-
-/** TEST PDF FILE **/

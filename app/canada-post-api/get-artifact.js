@@ -16,17 +16,13 @@ const getNCSFrom = (json) => {
     encoding: null // Enable returning binary data
   }
 
-  console.log("Artifact URL: " + url);
-  return new Promise( (resolve, reject) => {
-    request.get(getOptions, (e, r, b) => {
-      if(e) return reject(e);
+  console.log("GET Artifact URL: " + url);
 
-      try{
+  return new Promise( (resolve, reject) => {
+      request.get(getOptions, (e, r, b) => {
+        if(e) return reject(e);
         return resolve(b);
-      } catch(err) {
-        reject(err)
-      }
-    })
+      })
   });
 }
 
