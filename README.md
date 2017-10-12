@@ -21,6 +21,8 @@ You can find more [information here](https://www.canadapost.ca/cpo/mc/business/p
 ```bash
 npm i
 npm run dev
+npm run test #to run test with mocha
+curl -d "./request-body.xml" http://localhost:8080/ #to send post request to server
 ```
 
 ## Bonus
