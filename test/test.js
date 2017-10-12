@@ -6,8 +6,6 @@ const chaiAsPromised = require('chai-as-promised');
 chai.config.includeStack = true;
 chai.use(chaiAsPromised);
 
-const createShipment = require('../app/canada-post-api/create-ncs');
-
 /** FIND NESTED VALUE **/
 const getNestedValue = require('../app/canada-post-api/get-label').getNestedValue;
 describe("When find nested value", function() {
@@ -23,6 +21,8 @@ describe("When find nested value", function() {
 })
 
 /** READ XML FILE **/
+const createShipment = require('../app/canada-post-api/create-ncs');
+
 const readXml = createShipment.readXml;
 describe("When reading xml file", function() {
   it("should return correct xml format", function() {

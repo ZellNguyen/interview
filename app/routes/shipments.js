@@ -2,8 +2,7 @@ const request = require('request');
 const express = require('express');
 const router = express.Router();
 
-const createShipment = require('../canada-post-api/create-ncs');
-const getLabel = require('../canada-post-api/get-label');
+const canadaPostRequest = require('../canada-post-api');
 
 const fs = require('fs');
 
@@ -11,9 +10,9 @@ const errorHandler = require('../api-logger');
 
 router.post('/', (req, res, next) => {
   const xmlFile = req.body;
-  createShipment.with(xmlFile)
+  canadaPostRequest.createShipment.with(xmlFile)
     .catch( (err) => { errorHandler(err, res, 400); } ) // Handling Create new Non-contract shipment ERROR
-    .then( (json) => getLabel.from(json) )
+    .then( (json) => canadaPostRequest.getLabel.from(json) )
     .catch( (err) => { errorHandler(err, res, 500); } ) // Handling Get Artifact ERROR
     .then( ( artifact ) => {
       const fileName = "./tmp/label-" + artifact.id + ".pdf";
